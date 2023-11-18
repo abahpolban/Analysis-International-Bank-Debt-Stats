@@ -37,3 +37,50 @@ from international_debt;
 ![image](https://github.com/abahpolban/Analysis-International-Bank-Debt-Stats/assets/87195694/88f4f8d9-0b74-4fa0-b466-eba49dd098db)
 
 We can see that we are working with 124 different country in the table.
+
+3. cleaning null's data
+
+This steps is optional, we need to check the data we are working with is clean. We can do this by simply check for every column, is there null value. If we find null's value, we can either delete the data that has null value or we can update the data by ask the source's about the data. If we not find null's value, it mean that the data is ready to go.
+
+**query :**
+```sql
+select * from international_debt
+where country_name is null or country_code is null or indicator_code is null
+    or indicator_name is null or debt is null;
+```
+**result:**
+
+   ![image](https://github.com/abahpolban/Analysis-International-Bank-Debt-Stats/assets/87195694/7f4c9e0e-38d7-4a17-9b97-0d0e8086732f)
+
+we can see that the query we run showed no result. This mean that the data we are working with is already clean and not contain null value.
+
+
+### 📌 **Anlyze the International Bank Debt datasets**
+
+Now that the data we are working with is ready to go, we can start analyzing the data by answering the question. 
+
+### 1. What is the total amount of debt that is owed by the countries listed in the dataset?
+
+The first question is 'What is the total amount of debt that is owed by the countries listed in the dataset?'. From the data, we know that the debts is categorized by the country_name and then by the indicator_name. To categorized the total ammount of debt owned by the countries, we can use the group by clause on country_name and then summerize all the debt to get the total ammount of debts. Here are the following steps we can do:
+- get the total debts using sum clause
+- call country_name column
+- group it by country_name 
+
+**query:**
+  
+```sql
+select 
+    country_name,
+    round(sum(debt),1) as total_debt
+from international_debt
+group by country_name;
+```
+
+**result:**
+
+![image](https://github.com/abahpolban/Analysis-International-Bank-Debt-Stats/assets/87195694/5ba4d5f0-ca16-414b-86e4-08031cd924f3)
+
+from the result, we can see that we accomplish to get totals of 124 value listed according to the total ammount of debt.
+
+###  2. Which country owns the maximum amount of debt and what does that amount look like?
+
